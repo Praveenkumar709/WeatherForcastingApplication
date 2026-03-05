@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Weather App</h1>
+        
+        <form action="/weather" method="POST">
+            <input type="text" name="city" placeholder="Enter City" required>
+            <button type="submit">Get Weather</button>
+        </form>
+
+        <% if (weatherData) { %>
+            <div class="weather-info">
+                <h2>Weather in <%= weatherData.city.name %></h2>
+                <p>Humidity: <%= weatherData.list[0].main.humidity %>%</p>
+                <p>Weather: <%= weatherData.list[0].weather[0].description %></p>
+                <img src="http://openweathermap.org/img/wn/<%= weatherData.list[0].weather[0].icon %>@2x.png" alt="Weather Icon">
+            </div>
+
+            <div class="chart-container">
+                <canvas id="weatherChart"></canvas>
+            </div>
+
+            <script>
+                const weatherData = <%- JSON.stringify(weatherData) %>;
+            </script>
+            <script src="/chart.js"></script>
+        <% } %>
+    </div>
+</body>
+</html>
+
